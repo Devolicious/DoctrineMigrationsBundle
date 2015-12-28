@@ -30,10 +30,10 @@ abstract class DoctrineCommand extends BaseCommand
 {
     public static function configureMigrations(ContainerInterface $container, Configuration $configuration, $em)
     {
-        if ($container->hasParameter('doctrine_migrations.default_entity_manager')) {
-            $configurationPrefix = 'doctrine_migrations.default_entity_manager';
-        } elseif ($container->hasParameter('doctrine_migrations.' . $em)) {
+        if ($em !== null && $container->hasParameter('doctrine_migrations.' . $em)) {
             $configurationPrefix = 'doctrine_migrations.' . $em;
+        } elseif ($container->hasParameter('doctrine_migrations.default_entity_manager')) {
+            $configurationPrefix = 'doctrine_migrations.default_entity_manager';
         } else {
             if (null === $em) {
                 $message = 'There is no doctrine migrations configuration available for the default entity manager';
